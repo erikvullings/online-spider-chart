@@ -53,7 +53,7 @@ export const DefinePage: MeiosisComponent = () => {
                 label: 'ID field',
                 type: 'select',
                 options,
-                className: 'col s6',
+                className: 'col s4',
               },
               {
                 id: 'infoColumn',
@@ -63,7 +63,18 @@ export const DefinePage: MeiosisComponent = () => {
                   { id: 'none', label: 'No info field present' },
                   ...options.filter((i) => !idColumn || idColumn !== i.id),
                 ],
-                className: 'col s6',
+                className: 'col s4',
+              },
+              {
+                id: 'type',
+                required: true,
+                label: 'Chart type',
+                type: 'select',
+                options: [
+                  { id: 'spider', label: 'Spider' },
+                  { id: 'radar', label: 'Radar' },
+                ],
+                className: 'col s4',
               },
               {
                 id: 'columns',

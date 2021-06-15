@@ -1,9 +1,10 @@
 import m from 'mithril';
+import { FlatButton } from 'mithril-materialized';
 import { LayoutForm } from 'mithril-ui-form';
 import { Dashboards } from '../models';
 import { MeiosisComponent } from '../services';
 import { SpiderChartFactory, SpiderColumns, SpiderData, SpiderOptions } from 'svg-spider-chart';
-import { excelToJSON } from '../utils';
+import { excelToJSON, formatDate } from '../utils';
 
 const SpiderChart = SpiderChartFactory(m);
 
@@ -38,6 +39,7 @@ export const ChartPage: MeiosisComponent = () => {
         curId = '',
         converted,
         colors = defaultColors,
+        type = 'spider',
       } = dataModel;
       if (!idColumn) return m('p.error', 'No ID column defined!');
       if (columns.length === 0) return m('p.error', 'No data column defined!');
@@ -105,21 +107,85 @@ export const ChartPage: MeiosisComponent = () => {
 
         data &&
           m(SpiderChart, {
+            id: 'spiderchart',
             className: 'spider-chart personas',
             viewBox: '-20 0 140 100',
             columns: spiderColumns,
             data,
             options: {
+              scaleType: type,
               size: 100,
               scales: 10,
-              scaleType: 'spider',
+              // scaleType: 'spider',
               shapeProps: (data) => ({
                 className: 'shape',
                 stroke: data.color as string,
                 fill: data.color !== clrs[0].color ? 'transparent' : (data.color as string),
               }),
+              style: `.spider-chart {
+                width: 100%;
+                max-width: 100%;
+              }
+              .spider-chart .axis {
+                stroke: #555;
+                stroke-width: 0.2;
+              }
+              .spider-chart .scale {
+                fill: #eee;
+                stroke: #999;
+                stroke-width: 0.2;
+              }
+              .spider-chart .shape {
+                fill-opacity: 0.3;
+                stroke-width: 0.5;
+              }
+              .spider-chart:hover .shape {
+                fill-opacity: 0.3;
+              }
+              .spider-chart .shape:hover,
+              .spider-chart:hover .shape:hover {
+                fill-opacity: 0.6;
+              }
+              .spider-chart .caption {
+                font-size: 3px;
+                fill: #444;
+                font-weight: normal;
+                text-shadow: 1px 1px 0 #fff;
+              }`,
             } as Partial<SpiderOptions>,
           }),
+        m('.col.s12.right-align', [
+          m('a#downloadAnchorElem', { style: 'display:none' }),
+          m(FlatButton, {
+            iconName: 'download',
+            label: 'Download as SVG',
+            onclick: () => {
+              const svg = document.getElementById('spiderchart');
+              if (!svg) return;
+              const serializer = new XMLSerializer();
+              let source = serializer.serializeToString(svg);
+
+              //add name spaces.
+              if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+                source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+              }
+              if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+                source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+              }
+              //add xml declaration
+              source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+              //convert svg source to URI data scheme.
+              const dataStr = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source);
+              const dlAnchorElem = document.getElementById('downloadAnchorElem');
+              if (!dlAnchorElem) return;
+              dlAnchorElem.setAttribute('href', dataStr);
+              dlAnchorElem.setAttribute('download', `${formatDate()}_v${curId}.svg`);
+              dlAnchorElem.click();
+              console.log(source);
+            },
+          }),
+        ]),
       ]);
     },
   };

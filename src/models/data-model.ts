@@ -3,6 +3,7 @@
 export type DataModel = {
   version?: number;
   timestamp?: number;
+  type?: 'radar' | 'spider';
   raw?: string;
   converted?: {
     headers: string[];

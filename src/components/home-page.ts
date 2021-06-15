@@ -20,7 +20,7 @@ export const HomePage: MeiosisComponent = () => {
     view: ({
       attrs: {
         state: {
-          app: { dataModel: catModel },
+          app: { dataModel },
         },
         actions: { saveModel },
       },
@@ -38,13 +38,13 @@ export const HomePage: MeiosisComponent = () => {
           m(Button, {
             iconName: 'clear',
             className: 'btn-large',
-            label: 'Clear',
+            label: 'Start new',
             onclick: () => {
               saveModel({} as DataModel);
-              dashboardSvc.switchTo(Dashboards.CHART);
+              dashboardSvc.switchTo(Dashboards.SETTINGS);
             },
           }),
-          typeof catModel.version === 'number' &&
+          typeof dataModel.version === 'number' &&
             m(Button, {
               iconName: 'edit',
               className: 'btn-large',
@@ -61,14 +61,14 @@ export const HomePage: MeiosisComponent = () => {
             onclick: () => {
               const dlAnchorElem = document.getElementById('downloadAnchorElem');
               if (!dlAnchorElem) return;
-              const version = typeof catModel.version === 'undefined' ? 1 : catModel.version++;
+              const version = typeof dataModel.version === 'undefined' ? 1 : dataModel.version++;
               const dataStr =
                 'data:text/json;charset=utf-8,' +
-                encodeURIComponent(JSON.stringify({ version, ...catModel }, null, 2));
+                encodeURIComponent(JSON.stringify({ version, ...dataModel }, null, 2));
               dlAnchorElem.setAttribute('href', dataStr);
               dlAnchorElem.setAttribute(
                 'download',
-                `${formatDate()}_v${version}_capability_model.json`
+                `${formatDate()}_v${version}_spider_data_model.json`
               );
               dlAnchorElem.click();
             },
