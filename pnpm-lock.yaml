@@ -16,6 +16,7 @@ specifiers:
   mithril-ui-form-plugin: ^0.3.3
   rimraf: ^3.0.2
   style-loader: ^2.0.0
+  svg-spider-chart: ^0.2.1
   ts-loader: ^8.3.0
   typescript: ^4.3.2
   webpack: ^5.39.0
@@ -29,6 +30,7 @@ dependencies:
   mithril-materialized: 0.19.0_f3d9df6f4766fd28b6cfb8072ccbc3ca
   mithril-ui-form: 1.1.8_468454086b960aae41e583438778ffa2
   mithril-ui-form-plugin: 0.3.3
+  svg-spider-chart: 0.2.1
 
 devDependencies:
   '@types/materialize-css': 1.0.10
@@ -3849,6 +3851,10 @@ packages:
     dependencies:
       has-flag: 4.0.0
     dev: true
+
+  /svg-spider-chart/0.2.1:
+    resolution: {integrity: sha512-nCGF4buDYham7vfWljuXmzAuerW95wWWxk/UdKkvNVafvBWBbnSp8h1O7no0tZPJGICh7fqXhHej3aOSlx27Og==}
+    dev: false
 
   /svgo/2.3.0:
     resolution: {integrity: sha512-fz4IKjNO6HDPgIQxu4IxwtubtbSfGEAJUq/IXyTPIkGhWck/faiiwfkvsB8LnBkKLvSoyNNIY6d13lZprJMc9Q==}

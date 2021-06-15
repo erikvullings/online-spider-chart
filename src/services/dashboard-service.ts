@@ -2,7 +2,7 @@ import m, { RouteDefs } from 'mithril';
 import { Dashboards, IDashboard } from '../models';
 import { actions, states } from './meiosis';
 import { Layout } from '../components/layout';
-import { AboutPage, HomePage, DefinePage } from '../components';
+import { AboutPage, HomePage, DefinePage, ChartPage } from '../components';
 
 class DashboardService {
   private dashboards!: ReadonlyArray<IDashboard>;
@@ -101,7 +101,7 @@ export const dashboardSvc: DashboardService = new DashboardService([
     icon: 'analytics',
     route: '/chart',
     visible: true,
-    component: AboutPage,
+    component: ChartPage,
   },
   {
     id: Dashboards.ABOUT,
