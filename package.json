@@ -1,0 +1,56 @@
+{
+  "name": "gui",
+  "private": "true",
+  "version": "0.0.1",
+  "description": "GUI dashboard.",
+  "scripts": {
+    "clean": "rimraf ./public",
+    "cleanup": "npm run clean",
+    "dev": "npm start",
+    "start": "webpack serve --env development --open",
+    "build": "webpack --env production",
+    "build:domain": "npm run clean && npm run build",
+    "link2": "npm link mithril-ui-form"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erikvullings/online-spider-chart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/erikvullings/online-spider-chart/issues"
+  },
+  "homepage": "https://github.com/erikvullings/online-spider-chart#readme",
+  "author": "Erik Vullings <erik.vullings@tno.nl> (http://www.tno.nl)",
+  "keywords": [
+    "spider chart",
+    "radar chart",
+    "online"
+  ],
+  "license": "MIT",
+  "app": "src/index.html",
+  "target": "web",
+  "dependencies": {
+    "material-icons": "^0.6.4",
+    "materialize-css": "^1.0.0",
+    "mithril": "^2.0.4",
+    "mithril-materialized": "^0.19.0",
+    "mithril-ui-form": "^1.1.8",
+    "mithril-ui-form-plugin": "^0.3.3"
+  },
+  "devDependencies": {
+    "@types/materialize-css": "^1.0.10",
+    "@types/mithril": "^2.0.7",
+    "css-loader": "^5.2.6",
+    "css-minimizer-webpack-plugin": "^2.0.0",
+    "html-webpack-plugin": "^5.3.1",
+    "html-webpack-tags-plugin": "^3.0.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "rimraf": "^3.0.2",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.3.0",
+    "typescript": "^4.3.2",
+    "webpack": "^5.39.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
