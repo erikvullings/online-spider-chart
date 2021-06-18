@@ -4,7 +4,7 @@ import { Button, Icon } from 'mithril-materialized';
 import background from '../assets/background.jpg';
 import { dashboardSvc, MeiosisComponent } from '../services';
 import { Dashboards } from '../models';
-import { formatDate } from '../utils';
+import { excelToJSON, formatDate } from '../utils';
 import { DataModel } from '../models';
 
 export const HomePage: MeiosisComponent = () => {
@@ -22,8 +22,10 @@ export const HomePage: MeiosisComponent = () => {
       try {
         const decompressed = lz.decompressFromEncodedURIComponent(model);
         if (!decompressed) return;
-        const dataModel = JSON.parse(decompressed);
-        saveModel(dataModel);
+        const dataModel = JSON.parse(decompressed) as DataModel;
+        const { raw = '' } = dataModel;
+        dataModel.converted = raw ? excelToJSON(raw) : undefined;
+        if (dataModel.converted) saveModel(dataModel);
         changePage(Dashboards.CHART);
       } catch (err) {
         console.error(err);

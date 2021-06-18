@@ -16357,7 +16357,10 @@ var HomePage = function () {
                 if (!decompressed)
                     return;
                 var dataModel = JSON.parse(decompressed);
-                saveModel(dataModel);
+                var _c = dataModel.raw, raw = _c === void 0 ? '' : _c;
+                dataModel.converted = raw ? utils_1.excelToJSON(raw) : undefined;
+                if (dataModel.converted)
+                    saveModel(dataModel);
                 changePage(models_1.Dashboards.CHART);
             }
             catch (err) {
